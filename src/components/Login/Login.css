@@ -1,0 +1,16 @@
+.login-wrapper {
+    /* background-image: url("./star.jpeg"); */
+    background-image: url("./images.jpeg");
+    background-size: cover;
+    /* background-color: #cccccc; */
+    height: 100vh;
+    /* margin: 20px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-wrapper {
+    padding: 10px;
+    background: white;
+}

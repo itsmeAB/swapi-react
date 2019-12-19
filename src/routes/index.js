@@ -4,7 +4,6 @@ import Login from "../components/Login";
 
 const routes = [
   { path: "/", exact: true, name: "Home", component: Home },
-  // { path: "/", exact: true, name: "Home", component: Home },
   { path: "/login", exact: true, name: "Login", component: Login }
 ];
 

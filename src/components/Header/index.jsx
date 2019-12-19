@@ -1,13 +1,7 @@
 import React from "react";
 import {
   PageHeader,
-//   Menu,
-//   Dropdown,
-//   Icon,
   Button,
-//   Tag,
-//   Typography,
-//   Row
 } from "antd";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -36,24 +30,9 @@ const Header = props => {
           <Button key="1" type="primary" onClick={handleLogout}>
             logout
           </Button>
-          //   <DropdownMenu key="more" />
         ]}
-        // avatar={{
-        //   src: "https://avatars1.githubusercontent.com/u/8186664?s=460&v=4"
-        // }}
         avatar={{icon: "user"}}
-        // breadcrumb={{ routes }}
       >
-        {/* <Content
-          extraContent={
-            <img
-              src="https://gw.alipayobjects.com/mdn/mpaas_user/afts/img/A*KsfVQbuLRlYAAAAAAAAAAABjAQAAAQ/original"
-              alt="content"
-            />
-          }
-        >
-          {content}
-        </Content> */}
       </PageHeader>
     </>
   );

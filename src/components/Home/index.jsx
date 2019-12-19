@@ -3,6 +3,7 @@ import { Row, Col, Input, Card, Progress, Spin } from "antd";
 import Header from "../Header";
 import { getPlanets } from "../../services";
 import { connect } from "react-redux";
+import "./Home.css";
 
 const { Search } = Input;
 
@@ -12,7 +13,6 @@ const Home = props => {
     if (!user.isLoggedIn) {
       props.history.push("/login");
     }
-    console.log("useEffect_calling");
   });
 
   const [planets, setplanets] = useState([]);
@@ -88,36 +88,42 @@ const Home = props => {
   return (
     <>
       <Header />
-      <Row
-        align="middle"
-        justify="center"
-        type="flex"
-        style={{ marginTop: "10px" }}
-      >
-        <Col>
-          <Search
-            placeholder="search here ..."
-            onSearch={value => searchPlanet(value)}
-            onChange={e => searchPlanet(e.target.value)}
-            style={{ width: 200 }}
-          />
-        </Col>
-      </Row>
-      <Row
-        gutter={[32, 32]}
-        align="middle"
-        justify="center"
-        type="flex"
-        style={{ marginTop: "10px" }}
-      >
-        {loading ? (
+      <div className="search-wrapper">
+        <Row
+          align="middle"
+          justify="center"
+          type="flex"
+          style={{ marginTop: "10px" }}
+        >
           <Col>
-            <Spin size="large" tip="Searching..."/>
+            <Search
+              placeholder="search here for planets..."
+              onSearch={value => searchPlanet(value)}
+              onChange={e => searchPlanet(e.target.value)}
+              style={{ width: 200 }}
+            />
           </Col>
+        </Row>
+      </div>
+      <div className="result-wrapper">
+        {loading ? (
+          <Row gutter={[32, 32]} align="top" justify="center" type="flex">
+            <Col>
+              <Spin size="large" tip="Searching..." />
+            </Col>
+          </Row>
         ) : (
-          renderPlanets(planets)
+          <Row
+            gutter={[32, 32]}
+            align="top"
+            justify="start"
+            type="flex"
+            style={{ marginTop: "10px" }}
+          >
+            {renderPlanets(planets)}
+          </Row>
         )}
-      </Row>
+      </div>
     </>
   );
 };
