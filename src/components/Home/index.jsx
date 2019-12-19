@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Input, Card, Progress } from "antd";
-import Header from '../Header';
+import { Row, Col, Input, Card, Progress, Spin } from "antd";
+import Header from "../Header";
 import { getPlanets } from "../../services";
 import { connect } from "react-redux";
-
 
 const { Search } = Input;
 
@@ -13,13 +12,15 @@ const Home = props => {
     if (!user.isLoggedIn) {
       props.history.push("/login");
     }
-    console.log('useEffect_calling')
+    console.log("useEffect_calling");
   });
 
   const [planets, setplanets] = useState([]);
   const [totalPopulation, setTotalPopulation] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const searchPlanet = async searchTerm => {
+    setLoading(true);
     const res = await getPlanets(searchTerm);
     if (res) {
       setplanets(res);
@@ -35,6 +36,7 @@ const Home = props => {
         : 0;
       setTotalPopulation(totalPop);
     }
+    setLoading(false);
   };
 
   const renderPlanets = planets => {
@@ -63,13 +65,6 @@ const Home = props => {
           <br />
           Population: <b>{planet.population}</b>
           <br />
-          {console.info(
-            "population",
-            planet.name,
-            planet.population,
-            totalPopulation,
-            planet.population / totalPopulation
-          )}
           <strong>
             {((planet.population * 100) / totalPopulation).toFixed(3)}%
           </strong>{" "}
@@ -93,18 +88,35 @@ const Home = props => {
   return (
     <>
       <Header />
-      <Row>
+      <Row
+        align="middle"
+        justify="center"
+        type="flex"
+        style={{ marginTop: "10px" }}
+      >
         <Col>
           <Search
-            placeholder="input search text"
+            placeholder="search here ..."
             onSearch={value => searchPlanet(value)}
             onChange={e => searchPlanet(e.target.value)}
             style={{ width: 200 }}
           />
         </Col>
       </Row>
-      <Row gutter={[32, 32]} style={{ marginTop: "10px" }}>
-        {renderPlanets(planets)}
+      <Row
+        gutter={[32, 32]}
+        align="middle"
+        justify="center"
+        type="flex"
+        style={{ marginTop: "10px" }}
+      >
+        {loading ? (
+          <Col>
+            <Spin size="large" tip="Searching..."/>
+          </Col>
+        ) : (
+          renderPlanets(planets)
+        )}
       </Row>
     </>
   );
