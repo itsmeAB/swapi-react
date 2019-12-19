@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Input, Card, Progress } from "antd";
+import Header from '../Header';
 import { getPlanets } from "../../services";
 import { connect } from "react-redux";
+
 
 const { Search } = Input;
 
@@ -90,7 +92,7 @@ const Home = props => {
 
   return (
     <>
-      <div>Home</div>
+      <Header />
       <Row>
         <Col>
           <Search
