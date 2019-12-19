@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Input, Card, Progress } from "antd";
 import { getPlanets } from "../../services";
+import { connect } from "react-redux";
 
 const { Search } = Input;
 
-const Home = () => {
+const Home = props => {
+  useEffect(() => {
+    const { user } = props;
+    if (!user.isLoggedIn) {
+      props.history.push("/login");
+    }
+    console.log('useEffect_calling')
+  });
+
   const [planets, setplanets] = useState([]);
   const [totalPopulation, setTotalPopulation] = useState(0);
 
@@ -99,4 +108,10 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+export default connect(mapStateToProps, null)(Home);
