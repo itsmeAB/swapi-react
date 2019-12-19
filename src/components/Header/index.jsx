@@ -20,7 +20,7 @@ const Header = props => {
   return (
     <>
       <PageHeader
-        title={user.name}
+        title={user && user.name}
         style={{
           border: "1px solid rgb(235, 237, 240)"
         }}
