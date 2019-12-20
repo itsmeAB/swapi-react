@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Input, Card, Progress, Spin } from "antd";
+import { Row, Col, Input, Card, Progress, Spin, Modal } from "antd";
 import Header from "../Header";
 import { getPlanets } from "../../services";
 import { connect } from "react-redux";
@@ -18,9 +18,36 @@ const Home = props => {
   const [planets, setplanets] = useState([]);
   const [totalPopulation, setTotalPopulation] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [firstTime, setFirstTime] = useState(null);
+  const [searchCount, setCount] = useState(0);
+  const [modal, setModal] = useState(false);
 
   const searchPlanet = async searchTerm => {
+    const {
+      user: { user }
+    } = props;
+
+    const date = new Date();
+    let duration = 0;
+
+    if (!firstTime) {
+      setFirstTime(date);
+    } else {
+      duration = firstTime ? (firstTime, date, (date - firstTime) / 1000) : 0;
+      if (duration >= 60) {
+        setCount(0);
+        setFirstTime(null);
+      }
+    }
+
+    if (searchCount >= 15 && user.name !== "Luke Skywalker") {
+      setModal(true);
+      return;
+    }
+
+    setCount(searchCount + 1);
     setLoading(true);
+
     const res = await getPlanets(searchTerm);
     if (res) {
       setplanets(res);
@@ -85,6 +112,20 @@ const Home = props => {
     ));
   };
 
+  const getWarning = () => {
+    return (
+      <Modal
+        title="Search limit exceeds"
+        visible
+        // onOk={()=>setModal(false)}
+        onCancel={() => setModal(false)}
+        footer={null}
+      >
+        <p>Please try again later...</p>
+      </Modal>
+    );
+  };
+
   return (
     <>
       <Header />
@@ -124,6 +165,7 @@ const Home = props => {
           </Row>
         )}
       </div>
+      {modal && getWarning()}
     </>
   );
 };
