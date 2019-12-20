@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  PageHeader,
-  Button,
-} from "antd";
+import { PageHeader, Button } from "antd";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import userActions from "../../redux/user";
@@ -24,16 +21,15 @@ const Header = props => {
         style={{
           border: "1px solid rgb(235, 237, 240)"
         }}
-        subTitle="START WARS"
+        subTitle="STAR WARS"
         // tags={<Tag color="blue">Running</Tag>}
         extra={[
           <Button key="1" type="primary" onClick={handleLogout}>
             logout
           </Button>
         ]}
-        avatar={{icon: "user"}}
-      >
-      </PageHeader>
+        avatar={{ icon: "user" }}
+      ></PageHeader>
     </>
   );
 };
